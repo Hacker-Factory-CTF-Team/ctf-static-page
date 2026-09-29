@@ -17,23 +17,6 @@ El reto avanzado de esteganografía **no está incluido en este repositorio**.
 La página `challenges/04-stego/index.html` simplemente redirige al repositorio
 o página del taller independiente.
 
-Configura allí:
-
-```js
-const WORKSHOP_URL = "";
-```
-
-con la URL del taller.
-
-Los archivos de imagen/audio del taller no se incluyen en este repositorio
-para evitar duplicar el contenido del reto avanzado.
-
-## GitHub Pages
-
-`Settings → Pages → Deploy from a branch → main → / (root)`
-
-El proyecto no necesita un servidor para funcionar.
-
 ## Nota sobre flags
 
 La validación es client-side y el progreso usa `localStorage`. Es apropiado
