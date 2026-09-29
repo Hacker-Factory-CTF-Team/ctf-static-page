@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>02 — Caesar | Cyber Fair CTF</title>
+<link rel="stylesheet" href="../../css/style.css">
+<style>
+.page{max-width:900px;margin:auto;padding:85px 25px}.back{color:var(--muted);text-decoration:none;font-size:.8rem}
+.box{margin-top:30px;padding:32px;border:1px solid var(--border);background:var(--panel)}
+.cipher{margin:22px 0;padding:20px;background:#05070a;border:1px solid var(--border);color:var(--green);font-size:1.1rem;word-break:break-word}
+.controls{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+input{padding:13px;background:#05070a;border:1px solid var(--border);color:var(--text);font:inherit;width:100%}
+button{padding:13px 18px;border:1px solid var(--green);background:transparent;color:var(--green);font:inherit;cursor:pointer}
+button:hover{background:var(--green);color:var(--bg)}
+.result{margin-top:16px;color:var(--muted);min-height:25px}.success{color:var(--green)}.error{color:var(--red)}
+.hint{margin-top:25px;padding:16px;border-left:2px solid var(--yellow);background:rgba(255,209,102,.04)}summary{cursor:pointer;color:var(--yellow)}
+@media(max-width:650px){.controls{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="navbar">
+<a class="logo" href="../../index.html"><span>&gt;_</span> CYBER FAIR CTF</a>
+<nav><a href="../../index.html#retos">Retos</a></nav>
+</header>
+<main class="page">
+<a class="back" href="../../index.html">← volver al CTF</a>
+<section class="box">
+<div class="eyebrow">// MISSION 02 · 100 PTS · CRYPTO</div>
+<h1>CAESAR</h1>
+<p>Hemos interceptado este mensaje:</p>
+<div class="cipher">FWR{FDHVDU_LV_FODVVLF}</div>
+<p>Alguien ha utilizado un cifrado clásico. La flag original empieza por <code>CTF{</code>.</p>
+
+<div class="controls">
+  <input id="shift" type="number" min="0" max="25" placeholder="Desplazamiento (0–25)">
+  <button id="try">PROBAR DESPLAZAMIENTO</button>
+</div>
+<div id="decoded" class="result"></div>
+
+<details class="hint">
+<summary>PISTA 1 — ¿Qué significa Caesar?</summary>
+<p>Julio César utilizaba un desplazamiento de letras para ocultar mensajes.</p>
+</details>
+<details class="hint">
+<summary>PISTA 2 — Fuerza bruta</summary>
+<p>Solo existen 26 desplazamientos posibles. Puedes probarlos todos hasta que el texto tenga sentido.</p>
+</details>
+
+<p style="margin-top:25px;color:var(--muted)">Introduce la flag recuperada:</p>
+<div class="controls">
+  <input id="flag" autocomplete="off" placeholder="CTF{...}">
+  <button id="submit">ENVIAR FLAG</button>
+</div>
+<div id="result" class="result"></div>
+</section>
+</main>
+
+<script>
+const CIPHERTEXT = "FWR{FDHVDU_LV_FODVVLF}";
+const FLAG = "CTF{CAESAR_IS_CLASSIC}";
+
+function caesarDecode(text, shift) {
+  return [...text].map(ch => {
+    const code = ch.charCodeAt(0);
+    if (code >= 65 && code <= 90) return String.fromCharCode((code - 65 - shift + 26) % 26 + 65);
+    if (code >= 97 && code <= 122) return String.fromCharCode((code - 97 - shift + 26) % 26 + 97);
+    return ch;
+  }).join("");
+}
+
+document.getElementById("try").onclick = () => {
+  const shift = Number(document.getElementById("shift").value);
+  document.getElementById("decoded").textContent =
+    Number.isInteger(shift) && shift >= 0 && shift <= 25
+      ? "→ " + caesarDecode(CIPHERTEXT, shift)
+      : "Introduce un desplazamiento entre 0 y 25.";
+};
+
+document.getElementById("submit").onclick = () => {
+  const result = document.getElementById("result");
+  if (document.getElementById("flag").value.trim() === FLAG) {
+    const completed = JSON.parse(localStorage.getItem("ctf_completed") || "[]");
+    if (!completed.includes("02")) completed.push("02");
+    localStorage.setItem("ctf_completed", JSON.stringify(completed));
+    result.className = "result success";
+    result.textContent = "✓ FLAG CORRECTA — +100 puntos.";
+  } else {
+    result.className = "result error";
+    result.textContent = "✗ FLAG INCORRECTA.";
+  }
+};
+</script>
+</body>
+</html>

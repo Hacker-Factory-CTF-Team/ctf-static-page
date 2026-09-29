@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>01 — Warm Up | Cyber Fair CTF</title>
+  <link rel="stylesheet" href="../../css/style.css">
+  <style>
+    .challenge-page { max-width: 850px; margin: auto; padding: 90px 25px; }
+    .back { color: var(--muted); text-decoration: none; font-size: .8rem; }
+    .back:hover { color: var(--green); }
+    .mission { margin-top: 35px; padding: 35px; border: 1px solid var(--border); background: var(--panel); }
+    .mission h1 { font-size: clamp(2.4rem, 7vw, 5rem); margin: 12px 0; }
+    .mission h1 span { color: var(--green); }
+    .mission p { color: var(--muted); margin: 15px 0; }
+    .hint { margin-top: 30px; padding: 18px; border-left: 2px solid var(--yellow); background: rgba(255,209,102,.04); }
+    .hint summary { cursor: pointer; color: var(--yellow); }
+    .submit { margin-top: 30px; display: flex; gap: 10px; }
+    .submit input { flex: 1; min-width: 0; padding: 13px; background: #05070a; border: 1px solid var(--border); color: var(--text); font: inherit; }
+    .submit button { padding: 13px 20px; border: 1px solid var(--green); background: transparent; color: var(--green); font: inherit; cursor: pointer; }
+    .submit button:hover { background: var(--green); color: var(--bg); }
+    #result { margin-top: 18px; min-height: 25px; }
+    .success { color: var(--green); }
+    .error { color: var(--red); }
+    .source-note { margin-top: 28px; color: #4e5965; font-size: .75rem; }
+    @media(max-width:600px){ .submit{flex-direction:column;} }
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <a class="logo" href="../../index.html"><span>&gt;_</span> CYBER FAIR CTF</a>
+    <nav><a href="../../index.html#retos">Retos</a></nav>
+  </header>
+
+  <main class="challenge-page">
+    <a class="back" href="../../index.html">← volver al CTF</a>
+
+    <section class="mission">
+      <div class="eyebrow">// MISSION 01 · 100 PTS</div>
+      <h1>Warm <span>Up</span></h1>
+
+      <p>
+        Bienvenido al CTF. Este primer reto no requiere ninguna herramienta
+        especial: solo tienes que observar.
+      </p>
+
+      <p>
+        Hay una flag escondida en esta página. El navegador necesita conocerla
+        para mostrar la web... así que quizá puedas descubrir dónde está.
+      </p>
+
+      <details class="hint">
+        <summary>PISTA 1 — ¿Dónde mirar?</summary>
+        <p>Piensa en lo que utiliza tu navegador para construir esta página.</p>
+      </details>
+
+      <details class="hint">
+        <summary>PISTA 2 — Inspecciona</summary>
+        <p>Prueba a abrir las herramientas de desarrollador (F12) y revisa el código fuente.</p>
+      </details>
+
+      <!--
+        Si estás haciendo este reto, has encontrado el lugar correcto.
+        FLAG: CTF{welcome_to_the_cyber_fair}
+      -->
+
+      <div class="submit">
+        <input id="flag" autocomplete="off" placeholder="CTF{...}">
+        <button id="submit">ENVIAR FLAG</button>
+      </div>
+
+      <div id="result" aria-live="polite"></div>
+
+      <p class="source-note">
+        Este reto es deliberadamente client-side. Todo lo que necesita el navegador
+        puede ser inspeccionado por el participante.
+      </p>
+    </section>
+  </main>
+
+  <script>
+    const FLAG = "CTF{welcome_to_the_cyber_fair}";
+    const input = document.getElementById("flag");
+    const button = document.getElementById("submit");
+    const result = document.getElementById("result");
+
+    function submitFlag() {
+      const value = input.value.trim();
+      if (value === FLAG) {
+        const completed = JSON.parse(localStorage.getItem("ctf_completed") || "[]");
+        if (!completed.includes("01")) completed.push("01");
+        localStorage.setItem("ctf_completed", JSON.stringify(completed));
+        result.className = "success";
+        result.textContent = "✓ FLAG CORRECTA — +100 puntos. Reto completado.";
+        button.disabled = true;
+      } else {
+        result.className = "error";
+        result.textContent = "✗ FLAG INCORRECTA — sigue investigando.";
+      }
+    }
+
+    button.addEventListener("click", submitFlag);
+    input.addEventListener("keydown", e => {
+      if (e.key === "Enter") submitFlag();
+    });
+  </script>
+</body>
+</html>

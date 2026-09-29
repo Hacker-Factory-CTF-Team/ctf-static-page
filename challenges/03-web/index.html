@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>03 — Inspect Me | Cyber Fair CTF</title>
+<link rel="stylesheet" href="../../css/style.css">
+<style>
+.page{max-width:900px;margin:auto;padding:85px 25px}.back{color:var(--muted);text-decoration:none;font-size:.8rem}
+.box{margin-top:30px;padding:32px;border:1px solid var(--border);background:var(--panel)}
+.fake-login{max-width:430px;margin:30px auto;padding:25px;border:1px solid var(--border);background:#05070a}
+.fake-login label{display:block;color:var(--muted);font-size:.75rem;margin:12px 0 5px}
+.fake-login input{width:100%;padding:12px;background:#0c1118;border:1px solid var(--border);color:var(--text)}
+.fake-login button{margin-top:18px;padding:12px 18px;background:transparent;color:var(--green);border:1px solid var(--green);font:inherit}
+.hint{margin-top:25px;padding:16px;border-left:2px solid var(--yellow);background:rgba(255,209,102,.04)}summary{cursor:pointer;color:var(--yellow)}
+#result{margin-top:15px;min-height:24px}
+.box .flag-submit{max-width:none;margin:35px 0 0;padding:28px 0 0;border:0;border-top:1px solid var(--border);background:none;text-align:center}
+</style>
+</head>
+<body>
+<header class="navbar">
+<a class="logo" href="../../index.html"><span>&gt;_</span> CYBER FAIR CTF</a>
+<nav><a href="../../index.html#retos">Retos</a></nav>
+</header>
+
+<main class="page">
+<a class="back" href="../../index.html">← volver al CTF</a>
+
+<section class="box">
+<div class="eyebrow">// MISSION 03 · 100 PTS · WEB</div>
+<h1>INSPECT ME</h1>
+<p>Un compañero ha preparado esta página de login. Dice que es imposible entrar sin credenciales.</p>
+<div class="fake-login">
+<label>Usuario</label><input value="visitor" readonly>
+<label>Contraseña</label><input type="password" value="not-the-password" readonly>
+<button id="login">INICIAR SESIÓN</button>
+<div id="result"></div>
+</div>
+<details class="hint">
+<summary>PISTA 1</summary><p>Antes de atacar una aplicación, mira qué te ha enviado el servidor.</p></details>
+<details class="hint">
+<summary>PISTA 2</summary><p>Abre las herramientas de desarrollador y busca en el código de la página.</p></details>
+
+<div class="flag-submit">
+  <div class="section-label">ENTREGA DE FLAG</div>
+  <h2>¿Has encontrado el secreto?</h2>
+  <p>Introduce la flag que has encontrado inspeccionando el código de la página.</p>
+
+  <div class="flag-form">
+    <input
+      id="flagInput"
+      type="text"
+      autocomplete="off"
+      placeholder="CTF{...}"
+      aria-label="Flag"
+    />
+    <button id="submitFlag" type="button">ENVIAR FLAG</button>
+  </div>
+
+  <p id="flagResult" class="flag-result" aria-live="polite"></p>
+</div>
+</section>
+</main>
+
+<script>
+const SECRET = "CTF{CHECK_THE_CLIENT}";
+document.getElementById("login").onclick = () => {
+  document.getElementById("result").textContent = "Acceso denegado.";
+};
+</script>
+<!-- PISTA PARA EL RETO: el cliente conoce más de lo que aparenta. -->
+
+<script>
+  const CORRECT_FLAG = "CTF{CHECK_THE_CLIENT}";
+  const flagInput = document.getElementById("flagInput");
+  const submitFlag = document.getElementById("submitFlag");
+  const flagResult = document.getElementById("flagResult");
+
+  function checkFlag() {
+    const value = flagInput.value.trim();
+
+    if (value === CORRECT_FLAG) {
+      localStorage.setItem("ctf_completed", JSON.stringify(
+        Array.from(new Set([
+          ...JSON.parse(localStorage.getItem("ctf_completed") || "[]"),
+          "03"
+        ]))
+      ));
+      flagResult.textContent = "✓ FLAG CORRECTA — +100 puntos.";
+      flagResult.className = "flag-result success";
+      flagInput.disabled = true;
+      submitFlag.disabled = true;
+    } else {
+      flagResult.textContent = "✗ Flag incorrecta. Revisa el código de la página.";
+      flagResult.className = "flag-result error";
+    }
+  }
+
+  submitFlag.addEventListener("click", checkFlag);
+  flagInput.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") checkFlag();
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>04 — Beyond the CTF | Cyber Fair CTF</title>
+<link rel="stylesheet" href="../../css/style.css">
+<style>
+.page{max-width:900px;margin:auto;padding:85px 25px}
+.back{color:var(--muted);text-decoration:none;font-size:.8rem}
+.box{margin-top:30px;padding:38px;border:1px solid rgba(255,209,102,.35);background:var(--panel);box-shadow:0 0 45px rgba(255,209,102,.04)}
+.box h1{font-size:clamp(2.4rem,7vw,5rem);margin:10px 0}
+.box h1 span{color:var(--yellow)}
+.box p{color:var(--muted);margin:16px 0}
+.advanced-label{color:var(--yellow)}
+.note{margin:30px 0;padding:18px;border-left:2px solid var(--yellow);background:rgba(255,209,102,.04);color:#aab4bf}
+.cta{display:inline-block;margin-top:8px;padding:15px 22px;border:1px solid var(--yellow);color:var(--yellow);text-decoration:none;font-weight:700}
+.cta:hover{background:var(--yellow);color:var(--bg)}
+</style>
+</head>
+<body>
+<header class="navbar">
+<a class="logo" href="../../index.html"><span>&gt;_</span> CYBER FAIR CTF</a>
+<nav><a href="../../index.html#retos">Retos</a></nav>
+</header>
+
+<main class="page">
+<a class="back" href="../../index.html">← volver al CTF</a>
+
+<section class="box">
+<div class="eyebrow advanced-label">// MISSION 04 · ADVANCED · STEGANOGRAPHY</div>
+
+<h1>BEYOND THE <span>CTF</span></h1>
+
+<p>
+Si has llegado hasta aquí, ya has visto algunos conceptos básicos de
+ciberseguridad. Ahora empieza algo más avanzado.
+</p>
+
+<p>
+El siguiente reto forma parte de un <strong>taller independiente de
+esteganografía</strong>. Allí tendrás que investigar archivos que esconden
+información de formas que no son visibles a simple vista.
+</p>
+
+<div class="note">
+<strong>⚠️ RETO AVANZADO</strong><br>
+No necesitas resolverlo para completar los retos básicos de esta feria.
+Si quieres continuar, entra en el taller y pon a prueba tus conocimientos.
+</div>
+
+<!--
+  IMPORTANTE PARA EL ORGANIZADOR:
+  Sustituye WORKSHOP_URL por la URL del repositorio/página del taller.
+-->
+<a class="cta" id="workshop" href="#" target="_blank" rel="noopener">
+  IR AL TALLER DE ESTEGANOGRAFÍA →
+</a>
+</section>
+</main>
+
+<script>
+const WORKSHOP_URL = ""; // ← Pega aquí la URL del otro repositorio/taller.
+const link = document.getElementById("workshop");
+
+if (WORKSHOP_URL) {
+  link.href = WORKSHOP_URL;
+} else {
+  link.addEventListener("click", (event) => {
+    event.preventDefault();
+    alert("El enlace del taller todavía no está configurado.");
+  });
+}
+</script>
+</body>
+</html>
