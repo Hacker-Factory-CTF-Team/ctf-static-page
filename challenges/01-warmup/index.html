@@ -78,31 +78,6 @@
     </section>
   </main>
 
-  <script>
-    const FLAG = "CTF{welcome_to_the_cyber_fair}";
-    const input = document.getElementById("flag");
-    const button = document.getElementById("submit");
-    const result = document.getElementById("result");
-
-    function submitFlag() {
-      const value = input.value.trim();
-      if (value === FLAG) {
-        const completed = JSON.parse(localStorage.getItem("ctf_completed") || "[]");
-        if (!completed.includes("01")) completed.push("01");
-        localStorage.setItem("ctf_completed", JSON.stringify(completed));
-        result.className = "success";
-        result.textContent = "✓ FLAG CORRECTA — +100 puntos. Reto completado.";
-        button.disabled = true;
-      } else {
-        result.className = "error";
-        result.textContent = "✗ FLAG INCORRECTA — sigue investigando.";
-      }
-    }
-
-    button.addEventListener("click", submitFlag);
-    input.addEventListener("keydown", e => {
-      if (e.key === "Enter") submitFlag();
-    });
-  </script>
+  <script src="../../js/challenges.js"></script>
 </body>
 </html>

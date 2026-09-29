@@ -56,40 +56,6 @@ button:hover{background:var(--green);color:var(--bg)}
 </section>
 </main>
 
-<script>
-const CIPHERTEXT = "FWR{FDHVDU_LV_FODVVLF}";
-const FLAG = "CTF{CAESAR_IS_CLASSIC}";
-
-function caesarDecode(text, shift) {
-  return [...text].map(ch => {
-    const code = ch.charCodeAt(0);
-    if (code >= 65 && code <= 90) return String.fromCharCode((code - 65 - shift + 26) % 26 + 65);
-    if (code >= 97 && code <= 122) return String.fromCharCode((code - 97 - shift + 26) % 26 + 97);
-    return ch;
-  }).join("");
-}
-
-document.getElementById("try").onclick = () => {
-  const shift = Number(document.getElementById("shift").value);
-  document.getElementById("decoded").textContent =
-    Number.isInteger(shift) && shift >= 0 && shift <= 25
-      ? "→ " + caesarDecode(CIPHERTEXT, shift)
-      : "Introduce un desplazamiento entre 0 y 25.";
-};
-
-document.getElementById("submit").onclick = () => {
-  const result = document.getElementById("result");
-  if (document.getElementById("flag").value.trim() === FLAG) {
-    const completed = JSON.parse(localStorage.getItem("ctf_completed") || "[]");
-    if (!completed.includes("02")) completed.push("02");
-    localStorage.setItem("ctf_completed", JSON.stringify(completed));
-    result.className = "result success";
-    result.textContent = "✓ FLAG CORRECTA — +100 puntos.";
-  } else {
-    result.className = "result error";
-    result.textContent = "✗ FLAG INCORRECTA.";
-  }
-};
-</script>
+<script src="../../js/challenges.js"></script>
 </body>
 </html>
